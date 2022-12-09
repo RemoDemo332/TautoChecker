@@ -215,19 +215,12 @@ module Main where
     equ :: Proposition -> Proposition -> Proposition
     equ = E
 
-    main = do
-        --putStrLn $ show (tautology prop1)
-        putStrLn $ " Hello  "
-        --print $ tautology prop2
-        --print $ concatProp prop2
-        --let x = prop2
-        --let t = toCNF prop2
-        --let val = sequence $ map (truthValue prop2) t
-        --print $ x
-        --print $ tautology x
-        --print $ tautology prop4
-        --print $ tautology prop5
-        let x = parseRPN "PQRAKPQKC"
-        let y = toNNF x
-        print $ y
-        
+    main :: IO()
+    main = interact (unlines . map (\line ->
+                                   let x = parseRPN line
+                                       y = toNNF x
+                                       z = toCNF y
+                                       taut = tautology z
+                                   in show taut ++ " " ++ show z
+                                    ) . lines)
+
